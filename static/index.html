@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+    <style>
+        .slidecontainer {
+            width: 100%;
+        }
+
+        .slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 25px;
+            background: #d3d3d3;
+            outline: none;
+            opacity: 0.7;
+            -webkit-transition: .2s;
+            transition: opacity .2s;
+        }
+
+        .slider:hover {
+            opacity: 1;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 25px;
+            height: 25px;
+            background: #4CAF50;
+            cursor: pointer;
+        }
+
+        .slider::-moz-range-thumb {
+            width: 25px;
+            height: 25px;
+            background: #4CAF50;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<h1>My pc remote</h1>
+
+<div class="slidecontainer">
+
+    <p>Volume control:</p>
+    <input type="range" min="1" max="100" value="50" class="slider" oninput="get_volume()" id="myRange">
+    <p class="volume_indicator">Volume level: 50</p>
+</div>
+
+<script>
+    function get_volume() {
+        $('.volume_indicator').text('Volume level: ' + String($('#myRange').val()))
+        $.ajax({
+            url: '/volume-control/',
+            type: 'GET',
+            async: true,
+            data: {'volume_level': $('#myRange').val()},
+
+            success: function (response) {
+                console.log('ok');
+            },
+            error: function (error) {
+                console.log('error');
+            }
+        });
+
+    }
+
+
+</script>
+</body>
+</html>
