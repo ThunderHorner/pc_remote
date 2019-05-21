@@ -57,10 +57,8 @@ scale = {'100%': 0, '99%': -0.15066957473754883, '98%': -0.30284759402275085, '9
 
 @app.route('/volume-control/', methods=['GET'])
 def test():
-
     if request.method == "GET":
         volume_level = request.args.get('volume_level')
-
         volume.SetMasterVolumeLevel(scale[volume_level + '%'], None)
         return volume_level
     return 'ok'
