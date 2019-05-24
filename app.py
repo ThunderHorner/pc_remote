@@ -1,5 +1,8 @@
 
 import os
+import pythoncom
+
+import wmi
 from flask import Flask, request, render_template
 
 from ctypes import cast, POINTER
@@ -61,6 +64,15 @@ def test():
         volume_level = request.args.get('volume_level')
         volume.SetMasterVolumeLevel(scale[volume_level + '%'], None)
         return volume_level
+    return 'ok'
+
+@app.route('/brightness-control/', methods=['GET'])
+def brightness_ajust():
+    if request.method == "GET":
+        pythoncom.CoInitialize()
+        brightness_level = request.args.get('brightness_level')
+        wmi.WMI(namespace='wmi').WmiMonitorBrightnessMethods()[0].WmiSetBrightness(brightness_level, 0)
+        return brightness_level
     return 'ok'
 
 
