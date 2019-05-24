@@ -86,6 +86,25 @@
         });
 
     }
+
+    function get_brightness() {
+        $('.brightness_indicator').text('Brightness level: ' + String($('#myBrightness').val()))
+        $.ajax({
+            url: '/brightness-control/',
+            type: 'GET',
+            async: true,
+            data: {'brightness_level': $('#myBrightness').val()},
+
+            success: function (response) {
+                console.log('ok');
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+
+    }
+
      function shutdown() {
 
         $.ajax({
