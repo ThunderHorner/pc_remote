@@ -51,6 +51,11 @@
     <p>Volume control:</p>
     <input type="range" min="1" max="100" value="50" class="slider" oninput="get_volume()" id="myRange">
     <p class="volume_indicator">Volume level: 50</p>
+
+    <p>Brightness control:</p>
+    <input type="range" min="1" max="100" value="50" class="slider" oninput="get_brightness()" id="myBrightness">
+    <p class="brightness_indicator">Brightness level: 50</p>
+
     <div class="row mb-5 m-auto">
     <button class="col-sm-6 m-auto " onclick="shutdown()" id="shutdown">shutdown</button>
 
@@ -81,6 +86,25 @@
         });
 
     }
+
+    function get_brightness() {
+        $('.brightness_indicator').text('Brightness level: ' + String($('#myBrightness').val()))
+        $.ajax({
+            url: '/brightness-control/',
+            type: 'GET',
+            async: true,
+            data: {'brightness_level': $('#myBrightness').val()},
+
+            success: function (response) {
+                console.log('ok');
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+
+    }
+
      function shutdown() {
 
         $.ajax({
